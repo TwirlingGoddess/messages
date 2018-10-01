@@ -24,7 +24,7 @@ server.on('request', (request, response) => {
   }
 
   else if (request.method === 'POST') {
-    let newMessage = { 'id': new Date() };
+    let newMessage = { 'id': 4 , 'user': 'alex trebek', 'message': 'answer in the form of a question'};
 
     request.on('data', (data) => {
       newMessage = Object.assign(newMessage, JSON.parse(data));
@@ -37,11 +37,13 @@ server.on('request', (request, response) => {
 });
 
 function getAllMessages(response) {
-  response.writeHead(200, { 'Content-Type': 'text/plain' });
+  response.writeHead(200, { 'Content-Type': 'application/json' });
   response.write(JSON.stringify(messages));
   response.end();
 }
 
-function addMessages(message, response) {
-  console.log(message, response)
+function addMessages(newMessage, response) {
+  response.writeHead(201, { 'Content-Type': 'application/json' });
+  response.write(JSON.stringify(newMessage));
+  response.end()
 }
